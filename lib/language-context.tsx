@@ -111,6 +111,8 @@ const translations: Record<Language, Record<string, string>> = {
       "Take the first step towards cosmic clarity and divine guidance",
     bookConsultation: "Book Consultation",
 
+    personalityDevelopment: "Personality Development",
+
     // Services Page
     servicesPageTitle: "Our Sacred Services",
     servicesPageSubtitle:
@@ -239,6 +241,8 @@ const translations: Record<Language, Record<string, string>> = {
     ctaDescription: "ब्रह्मांडीय स्पष्टता और दिव्य मार्गदर्शन की ओर पहला कदम उठाएं",
     bookConsultation: "परामर्श बुक करें",
 
+    personalityDevelopment: "व्यक्तित्व विकास",
+
     // Services Page
     servicesPageTitle: "हमारी पवित्र सेवाएं",
     servicesPageSubtitle: "आपके जीवन के हर पहलू के लिए व्यापक वैदिक मार्गदर्शन",
@@ -366,6 +370,8 @@ const translations: Record<Language, Record<string, string>> = {
     ctaDescription:
       "ವಿಶ್ವ ಸ್ಪಷ್ಟತೆ ಮತ್ತು ದೈವಿಕ ಮಾರ್ಗದರ್ಶನದ ಕಡೆಗೆ ಮೊದಲ ಹೆಜ್ಜೆ ಇಡಿ",
     bookConsultation: "ಸಮಾಲೋಚನೆ ಬುಕ್ ಮಾಡಿ",
+
+    personalityDevelopment: "ವ್ಯಕ್ತಿತ್ವ ಅಭಿವೃದ್ಧಿ",
 
     // Services Page
     servicesPageTitle: "ನಮ್ಮ ಪವಿತ್ರ ಸೇವೆಗಳು",
