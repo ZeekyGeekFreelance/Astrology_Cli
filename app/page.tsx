@@ -79,6 +79,7 @@ export default function HomePage() {
                 icon={s.icon}
                 title={t(s.titleKey)}
                 description={t(s.descKey)}
+                onClick={() => window.location.href = "/services"}
               />
             ))}
           </div>
@@ -87,7 +88,7 @@ export default function HomePage() {
             <Button
               asChild
               variant="outline"
-              className="border-saffron text-saffron hover:bg-saffron hover:text-cream"
+              className="border-saffron text-saffron bg-transparent hover:bg-saffron hover:text-white transition-all duration-300"
             >
               <Link href="/services">{t("exploreServices")}</Link>
             </Button>
@@ -109,7 +110,8 @@ export default function HomePage() {
             {challenges.map((c) => (
               <div
                 key={c.titleKey}
-                className="flex gap-4 rounded-lg border border-gold/20 bg-card p-6"
+                className="flex gap-4 rounded-lg border border-gold/20 bg-card p-6 cursor-pointer hover:border-gold/40 transition-all active:scale-95"
+                onClick={() => (window.location.href = "/services")}
               >
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-maroon/10 text-maroon">
                   <c.icon className="size-6" />
@@ -130,9 +132,12 @@ export default function HomePage() {
 
       {/* Stats */}
       <section className="border-y border-gold/20 bg-maroon py-12">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-12 px-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center justify-center gap-12 px-4 sm:grid-cols-3 lg:px-8">
           {stats.map((s) => (
-            <div key={s.valueKey} className="flex flex-col items-center gap-2 text-center">
+            <div
+              key={s.valueKey}
+              className="flex flex-col items-center gap-2 text-center"
+            >
               <s.icon className="size-8 text-gold" />
               <span className="font-serif text-3xl font-bold text-cream">
                 {s.value}
@@ -158,11 +163,11 @@ export default function HomePage() {
           <p className="mx-auto mt-4 max-w-xl text-cream/90">
             {t("ctaDescription")}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               asChild
               size="lg"
-              className="bg-cream text-saffron hover:bg-cream/90"
+              className="w-full bg-cream text-maroon hover:bg-cream/90 transition-all shadow-md active:scale-95 sm:w-auto"
             >
               <Link href="/contact">{t("bookConsultation")}</Link>
             </Button>
@@ -170,24 +175,24 @@ export default function HomePage() {
               asChild
               variant="outline"
               size="lg"
-              className="border-cream text-cream hover:bg-cream/10"
+              className="w-full border-cream text-cream bg-transparent hover:bg-cream hover:text-maroon shadow-md transition-all duration-300 active:scale-95 sm:w-auto"
             >
               <a href="tel:+919480708383">
-                <Phone className="size-4" />
+                <Phone className="size-4 mr-2" />
                 +91 94807 08383
               </a>
             </Button>
             <Button
               asChild
               size="lg"
-              className="bg-[#25D366] text-white hover:bg-[#25D366]/90"
+              className="w-full bg-[#f47936] text-white hover:bg-[#f47936]/50 shadow-lg active:scale-95 sm:w-auto"
             >
               <a
                 href="https://wa.me/919448313270"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MessageCircle className="size-4" />
+                <MessageCircle className="size-4 mr-2" />
                 WhatsApp
               </a>
             </Button>

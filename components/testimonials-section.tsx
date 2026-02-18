@@ -49,33 +49,37 @@ export function TestimonialsSection() {
   }, [emblaApi]);
 
   return (
-    <section className="py-16 lg:py-24">
+    <section className="py-16 lg:py-24 bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
+        <div className="mx-auto mb-16 max-w-2xl text-center">
           <h2 className="font-serif text-3xl font-bold text-maroon lg:text-4xl text-balance">
             {t("testimonialsTitle")}
           </h2>
           <DecorativeDivider className="mt-4" />
         </div>
 
-        <div className="relative">
+        <div className="relative px-6">
           <div ref={emblaRef} className="overflow-hidden">
-            <div className="flex">
+            <div className="flex -ml-4">
               {testimonials.map((item, idx) => (
                 <div
                   key={idx}
-                  className="min-w-0 flex-[0_0_100%] px-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+                  className="min-w-0 flex-[0_0_100%] pl-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
                 >
-                  <div className="flex h-full flex-col gap-4 rounded-lg border border-gold/20 bg-card p-6">
-                    <Quote className="size-8 text-gold/40" />
-                    <p className="flex-1 text-sm leading-relaxed text-muted-foreground italic">
-                      {'"'}{item.text}{'"'}
-                    </p>
-                    <div className="border-t border-gold/10 pt-4">
-                      <p className="font-serif font-semibold text-maroon">
+                  <div className="group relative h-full flex flex-col gap-6 rounded-2xl border border-gold/20 bg-card p-8 shadow-sm transition-all hover:border-gold/40 hover:shadow-md">
+                    <div className="absolute top-6 right-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <Quote className="size-12 text-maroon fill-maroon" />
+                    </div>
+                    <div className="relative">
+                      <p className="text-base leading-relaxed text-muted-foreground italic mb-6">
+                        {'"'}{item.text}{'"'}
+                      </p>
+                    </div>
+                    <div className="mt-auto border-t border-gold/10 pt-6">
+                      <p className="font-serif text-lg font-bold text-maroon">
                         {item.name}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-sm font-medium text-saffron">
                         {item.location}
                       </p>
                     </div>
@@ -91,7 +95,7 @@ export function TestimonialsSection() {
               variant="outline"
               size="icon"
               onClick={scrollPrev}
-              className="border-gold/30 text-maroon hover:bg-gold/10"
+              className="border-gold/30 text-maroon bg-transparent hover:bg-gold hover:text-maroon transition-all duration-300"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="size-4" />
@@ -100,9 +104,8 @@ export function TestimonialsSection() {
               {testimonials.map((_, idx) => (
                 <div
                   key={idx}
-                  className={`size-2 rounded-full transition-colors ${
-                    idx === selectedIndex ? "bg-saffron" : "bg-gold/30"
-                  }`}
+                  className={`size-2 rounded-full transition-colors ${idx === selectedIndex ? "bg-saffron" : "bg-gold/30"
+                    }`}
                 />
               ))}
             </div>
@@ -110,7 +113,7 @@ export function TestimonialsSection() {
               variant="outline"
               size="icon"
               onClick={scrollNext}
-              className="border-gold/30 text-maroon hover:bg-gold/10"
+              className="border-gold/30 text-maroon bg-transparent hover:bg-gold hover:text-maroon transition-all duration-300"
               aria-label="Next testimonial"
             >
               <ChevronRight className="size-4" />

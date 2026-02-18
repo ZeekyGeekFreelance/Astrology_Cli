@@ -7,6 +7,7 @@ interface ServiceCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -14,12 +15,14 @@ export function ServiceCard({
   icon: Icon,
   title,
   description,
+  onClick,
   className,
 }: ServiceCardProps) {
   return (
     <div
+      onClick={onClick}
       className={cn(
-        "group relative overflow-hidden rounded-lg border border-gold/20 bg-card p-6 transition-all hover:border-gold/50 hover:shadow-lg",
+        "group relative overflow-hidden rounded-lg border border-gold/20 bg-card p-6 transition-all hover:border-gold/50 hover:shadow-lg cursor-pointer",
         className
       )}
     >

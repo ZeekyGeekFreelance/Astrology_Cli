@@ -57,16 +57,20 @@ const translations: Record<Language, Record<string, string>> = {
     problemsTitle: "Life Challenges We Address",
     financial: "Financial & Career",
     financialDesc:
-      "Overcome financial obstacles, secure investments, and find the right career path",
-    relationships: "Relationships & Marriage",
+      "Overcome financial obstacles, secure investments, job applications, and promotions.",
+    relationships: "Marriage & Relationships",
     relationshipsDesc:
-      "Pre-marriage compatibility, post-marriage harmony, and Manglik Dosha remedies",
+      "Pre-marriage compatibility, post-marriage harmony, and Manglik Dosha remedies.",
     health: "Health & Wellness",
     healthDesc:
-      "Holistic guidance for physical, mental, and spiritual well-being",
+      "Holistic guidance for physical, mental, and spiritual well-being through Vedic wisdom.",
     spiritual: "Spiritual Remedies",
     spiritualDesc:
-      "Protection from Drishti Dosha, Sadhe-Sati solutions, and destiny enhancement",
+      "Protection from Drishti Dosha (Evil Eye), Sadhe-Sati solutions, and destiny enhancement.",
+    legalConsultancy: "Legal Matters",
+    legalConsultancyDesc: "Astrological guidance for court cases, legal disputes, and favorable outcomes.",
+    childrenProblems: "Children & Family",
+    childrenProblemsDesc: "Guidance for childbirth, naming ceremonies, and children-related concerns.",
 
     // Contact
     contactTitle: "Connect With Us",
@@ -112,6 +116,17 @@ const translations: Record<Language, Record<string, string>> = {
     bookConsultation: "Book Consultation",
 
     personalityDevelopment: "Personality Development",
+
+    // Recommendations
+    recommendations: "Recommendations",
+    luckyNames: "Lucky Names",
+    luckyNamesDesc: "Get name suggestions based on Nakshatra",
+    luckyNumberAndColor: "Lucky Number & Color",
+    luckyNumberAndColorDesc: "Calculate your cosmic power numbers and colors",
+    generate: "Generate",
+    calculationResults: "Calculation Results",
+    selectNakshatra: "Select Nakshatra",
+    selectRaashi: "Select Raashi",
 
     // Services Page
     servicesPageTitle: "Our Sacred Services",
@@ -198,6 +213,10 @@ const translations: Record<Language, Record<string, string>> = {
     spiritual: "आध्यात्मिक उपाय",
     spiritualDesc:
       "दृष्टि दोष से सुरक्षा, साढ़े साती समाधान, और भाग्य वृद्धि",
+    legalConsultancy: "कानूनी मार्गदर्शन",
+    legalConsultancyDesc: "अदालती मामलों और कानूनी विवादों के लिए विशेषज्ञ ज्योतिषीय मार्गदर्शन",
+    childrenProblems: "संतान परामर्श",
+    childrenProblemsDesc: "बच्चों से जुड़ी समस्याओं और उनके कल्याण के लिए समाधान",
 
     // Contact
     contactTitle: "हमसे जुड़ें",
@@ -327,6 +346,10 @@ const translations: Record<Language, Record<string, string>> = {
     spiritual: "ಆಧ್ಯಾತ್ಮಿಕ ಪರಿಹಾರಗಳು",
     spiritualDesc:
       "ದೃಷ್ಟಿ ದೋಷದಿಂದ ರಕ್ಷಣೆ, ಸಾಡೆ ಸಾತಿ ಪರಿಹಾರಗಳು",
+    legalConsultancy: "ಕಾನೂನು ಮಾರ್ಗದರ್ಶನ",
+    legalConsultancyDesc: "ನ್ಯಾಯಾಲಯದ ಸಮಸ್ಯೆಗಳು ಮತ್ತು ಕಾನೂನು ವಿವಾದಗಳಿಗೆ ತಜ್ಞ ಜ್ಯೋತಿಷ್ಯ ಮಾರ್ಗದರ್ಶನ",
+    childrenProblems: "ಮಕ್ಕಳ ಸಮಾಲೋಚನೆ",
+    childrenProblemsDesc: "ಮಕ್ಕಳಿಗೆ ಸಂಬಂಧಿಸಿದ ಸಮಸ್ಯೆಗಳು ಮತ್ತು ಅವರ ಯೋಗಕ್ಷೇಮಕ್ಕಾಗಿ ಪರಿಹಾರಗಳು",
 
     // Contact
     contactTitle: "ನಮ್ಮೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ",

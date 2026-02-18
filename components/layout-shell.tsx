@@ -3,7 +3,6 @@
 import { LanguageProvider } from "@/lib/language-context";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { WhatsAppButton } from "@/components/whatsapp-button";
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +12,6 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
-      <WhatsAppButton />
     </LanguageProvider>
   );
 }

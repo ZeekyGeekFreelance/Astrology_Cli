@@ -88,7 +88,7 @@ export default function PanchangPage() {
         </div>
         <div className="relative mx-auto max-w-3xl px-4 text-center lg:px-8">
           <Sun className="mx-auto size-10 text-gold" />
-          <h1 className="mt-4 font-serif text-3xl font-bold text-cream lg:text-5xl text-balance">
+          <h1 className="mt-4 font-serif text-2xl font-bold text-cream sm:text-3xl lg:text-5xl text-balance">
             {t("panchangPageTitle")}
           </h1>
           <p className="mt-3 text-cream/80">{t("panchangPageSubtitle")}</p>
@@ -109,11 +109,6 @@ export default function PanchangPage() {
                 : format(new Date(), "EEEE, MMMM d, yyyy")}
             </p>
             <DecorativeDivider className="mt-4" />
-            {usingSample && (
-              <p className="mt-3 rounded-md bg-gold/10 px-4 py-2 text-xs text-muted-foreground inline-block">
-                Sample data shown. Add entries via the /admin panel.
-              </p>
-            )}
           </div>
 
           {loading ? (
@@ -162,7 +157,7 @@ export default function PanchangPage() {
 
               {/* Sunrise/Sunset */}
               {(panchang.sunrise || panchang.sunset) && (
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-8 rounded-lg border border-gold/20 bg-muted/50 p-6">
+                <div className="mt-8 grid grid-cols-2 gap-4 rounded-lg border border-gold/20 bg-muted/50 p-6">
                   {panchang.sunrise && (
                     <div className="flex items-center gap-3">
                       <Sunrise className="size-6 text-saffron" />

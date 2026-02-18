@@ -31,17 +31,17 @@ export function HeroSection() {
           <p className="text-sm font-medium tracking-widest text-gold uppercase">
             {t("heroSubtitle")}
           </p>
-          <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-cream lg:text-6xl text-balance">
+          <h1 className="mt-4 font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-6xl text-balance">
             {t("heroTitle")}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream/85">
             {t("heroDescription")}
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               asChild
               size="lg"
-              className="bg-saffron text-cream hover:bg-saffron/90 text-base px-8 py-6"
+              className="w-full bg-saffron text-cream hover:bg-saffron/90 hover:shadow-lg hover:shadow-saffron/20 transition-all duration-300 active:scale-95 sm:w-auto"
             >
               <Link href="/contact">{t("getReading")}</Link>
             </Button>
@@ -49,7 +49,7 @@ export function HeroSection() {
               asChild
               variant="outline"
               size="lg"
-              className="border-gold text-gold hover:bg-gold/10 text-base px-8 py-6"
+              className="w-full border-gold text-gold bg-transparent hover:bg-gold hover:text-maroon shadow-md transition-all duration-300 active:scale-95 sm:w-auto"
             >
               <Link href="/services">{t("exploreServices")}</Link>
             </Button>

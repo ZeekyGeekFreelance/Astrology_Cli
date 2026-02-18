@@ -61,7 +61,7 @@ export function Footer() {
             <div className="flex flex-col gap-3">
               <a
                 href="tel:+919480708383"
-                className="flex items-center gap-2 text-sm text-cream/80 transition-colors hover:text-gold"
+                className="flex items-center gap-2 text-sm text-cream/80 transition-all hover:text-gold active:scale-95"
               >
                 <Phone className="size-4" />
                 +91 94807 08383
@@ -70,7 +70,7 @@ export function Footer() {
                 href="https://wa.me/919448313270"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-cream/80 transition-colors hover:text-gold"
+                className="flex items-center gap-2 text-sm text-cream/80 transition-all hover:text-gold active:scale-95"
               >
                 <MessageCircle className="size-4" />
                 +91 94483 13270

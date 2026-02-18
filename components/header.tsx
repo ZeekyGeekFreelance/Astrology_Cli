@@ -19,10 +19,12 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { key: "home", href: "/" },
   { key: "services", href: "/services" },
+  { key: "recommendations", href: "/recommendations" },
   { key: "panchang", href: "/panchang" },
   { key: "blog", href: "/blog" },
   { key: "contact", href: "/contact" },
 ];
+
 
 export function Header() {
   const { t } = useLanguage();
@@ -61,7 +63,7 @@ export function Header() {
         {/* Desktop Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
-          <Button asChild className="bg-saffron text-cream hover:bg-saffron/90">
+          <Button asChild className="bg-saffron text-white hover:bg-saffron/90 hover:shadow-lg hover:shadow-saffron/20 transition-all duration-300 active:scale-95">
             <Link href="/contact">{t("getReading")}</Link>
           </Button>
         </div>
@@ -100,7 +102,7 @@ export function Header() {
                 ))}
                 <Button
                   asChild
-                  className="mt-4 bg-saffron text-cream hover:bg-saffron/90"
+                  className="mt-4 bg-saffron text-white hover:bg-saffron/90 hover:shadow-lg hover:shadow-saffron/20 transition-all duration-300 active:scale-95"
                   onClick={() => setOpen(false)}
                 >
                   <Link href="/contact">{t("getReading")}</Link>
