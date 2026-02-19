@@ -1,14 +1,6 @@
-"use client";
-
-import React from "react";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./sanity/schemaTypes";
-
-// RELOAD_TRACKER: V4
-if (typeof window !== "undefined") {
-  window.React = React;
-}
 
 export default defineConfig({
   name: "vedicsages",
