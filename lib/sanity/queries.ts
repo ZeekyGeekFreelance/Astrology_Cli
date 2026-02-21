@@ -6,6 +6,7 @@ export const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   excerpt,
   category,
   image,
+  externalImageUrl,
   publishedAt,
   author
 }`;
@@ -18,6 +19,7 @@ export const POST_BY_SLUG_QUERY = `*[_type == "post" && slug.current == $slug][0
   body,
   category,
   image,
+  externalImageUrl,
   publishedAt,
   author
 }`;
@@ -29,6 +31,7 @@ export const POSTS_BY_CATEGORY_QUERY = `*[_type == "post" && category == $catego
   excerpt,
   category,
   image,
+  externalImageUrl,
   publishedAt,
   author
 }`;
@@ -39,31 +42,4 @@ export const RECENT_POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc)[
   slug,
   publishedAt,
   category
-}`;
-
-// Panchang queries
-export const PANCHANG_TODAY_QUERY = `*[_type == "panchang" && date == $date][0] {
-  _id,
-  date,
-  tithi,
-  vara,
-  nakshatra,
-  yoga,
-  karana,
-  sunrise,
-  sunset,
-  specialEvent
-}`;
-
-export const PANCHANG_LATEST_QUERY = `*[_type == "panchang"] | order(date desc)[0] {
-  _id,
-  date,
-  tithi,
-  vara,
-  nakshatra,
-  yoga,
-  karana,
-  sunrise,
-  sunset,
-  specialEvent
 }`;

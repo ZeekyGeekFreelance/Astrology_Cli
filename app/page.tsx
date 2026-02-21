@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Star,
@@ -26,16 +27,42 @@ import { HeroSection } from "@/components/hero-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 
 const services = [
-  { icon: Star, titleKey: "nameSuggestion", descKey: "nameSuggestionDesc" },
-  { icon: Hash, titleKey: "luckyNumber", descKey: "luckyNumberDesc" },
-  { icon: Palette, titleKey: "luckyColor", descKey: "luckyColorDesc" },
-  { icon: Gem, titleKey: "gemstones", descKey: "gemstonesDesc" },
+  {
+    icon: Star,
+    titleKey: "nameSuggestion",
+    descKey: "nameSuggestionDesc",
+    href: "/recommendations",
+  },
+  {
+    icon: Hash,
+    titleKey: "luckyNumber",
+    descKey: "luckyNumberDesc",
+    href: "/recommendations",
+  },
+  {
+    icon: Palette,
+    titleKey: "luckyColor",
+    descKey: "luckyColorDesc",
+    href: "/recommendations",
+  },
+  {
+    icon: Gem,
+    titleKey: "gemstones",
+    descKey: "gemstonesDesc",
+    href: "/recommendations",
+  },
   {
     icon: ScrollText,
     titleKey: "birthChartAnalysis",
     descKey: "birthChartAnalysisDesc",
+    href: "/recommendations",
   },
-  { icon: Shield, titleKey: "doshaRemedies", descKey: "doshaRemediesDesc" },
+  {
+    icon: Shield,
+    titleKey: "doshaRemedies",
+    descKey: "doshaRemediesDesc",
+    href: "/services",
+  },
 ];
 
 const challenges = [
@@ -46,13 +73,75 @@ const challenges = [
 ];
 
 const stats = [
-  { icon: Award, valueKey: "yearsExperience", value: "25+" },
-  { icon: Users, valueKey: "happyClients", value: "10,000+" },
-  { icon: Calendar, valueKey: "consultations", value: "50,000+" },
+  { icon: Award, valueKey: "yearsExperience", target: 25, suffix: "+" },
+  { icon: Users, valueKey: "happyClients", target: 10000, suffix: "+" },
+  { icon: Calendar, valueKey: "consultations", target: 50000, suffix: "+" },
 ];
+
+// Stats count-up starts very near final value to keep the motion subtle.
+const getStatStartValue = (target: number) => Math.max(0, target - 4);
 
 export default function HomePage() {
   const { t } = useLanguage();
+  const statsSectionRef = useRef<HTMLElement>(null);
+  const [hasAnimatedStats, setHasAnimatedStats] = useState(false);
+  const [animatedValues, setAnimatedValues] = useState<number[]>(() =>
+    stats.map((item) => getStatStartValue(item.target)),
+  );
+
+  useEffect(() => {
+    // Start stats animation only when stats section is visible.
+    const sectionEl = statsSectionRef.current;
+    if (!sectionEl || hasAnimatedStats) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setHasAnimatedStats(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(sectionEl);
+    return () => observer.disconnect();
+  }, [hasAnimatedStats]);
+
+  useEffect(() => {
+    // Animate stat numbers from start value -> target.
+    if (!hasAnimatedStats) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setAnimatedValues(stats.map((item) => item.target));
+      return;
+    }
+
+    const duration = 1400;
+    const startTime = performance.now();
+
+    let frameId = 0;
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setAnimatedValues(
+        stats.map((item) => {
+          const startValue = getStatStartValue(item.target);
+          return Math.round(startValue + (item.target - startValue) * eased);
+        }),
+      );
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [hasAnimatedStats]);
 
   return (
     <div>
@@ -72,14 +161,14 @@ export default function HomePage() {
             <DecorativeDivider className="mt-4" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="card-reveal grid gap-6 sm:grid-cols-2 lg:grid-cols-3" style={{ ["--reveal-delay" as any]: "80ms" }}>
             {services.map((s) => (
               <ServiceCard
                 key={s.titleKey}
                 icon={s.icon}
                 title={t(s.titleKey)}
                 description={t(s.descKey)}
-                onClick={() => window.location.href = "/services"}
+                onClick={() => (window.location.href = s.href)}
               />
             ))}
           </div>
@@ -106,7 +195,7 @@ export default function HomePage() {
             <DecorativeDivider className="mt-4" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="card-reveal grid gap-6 sm:grid-cols-2" style={{ ["--reveal-delay" as any]: "120ms" }}>
             {challenges.map((c) => (
               <div
                 key={c.titleKey}
@@ -131,16 +220,18 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="border-y border-gold/20 bg-maroon py-12">
+      <section ref={statsSectionRef} className="border-y border-gold/20 bg-maroon py-12">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center justify-center gap-12 px-4 sm:grid-cols-3 lg:px-8">
-          {stats.map((s) => (
+          {/* Animated counters */}
+          {stats.map((s, index) => (
             <div
               key={s.valueKey}
               className="flex flex-col items-center gap-2 text-center"
             >
               <s.icon className="size-8 text-gold" />
               <span className="font-serif text-3xl font-bold text-cream">
-                {s.value}
+                {animatedValues[index].toLocaleString()}
+                {s.suffix}
               </span>
               <span className="text-sm text-cream/70">{t(s.valueKey)}</span>
             </div>
@@ -185,10 +276,10 @@ export default function HomePage() {
             <Button
               asChild
               size="lg"
-              className="w-full bg-[#f47936] text-white hover:bg-[#f47936]/50 shadow-lg active:scale-95 sm:w-auto"
+              className="w-full border bg-[#f47936] text-white hover:bg-[#f47936]/50 shadow-lg active:scale-95 sm:w-auto"
             >
               <a
-                href="https://wa.me/919448313270"
+                href={`https://wa.me/919448313270?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -202,3 +293,7 @@ export default function HomePage() {
     </div>
   );
 }
+
+
+
+

@@ -6,21 +6,65 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/lib/language-context";
 import { toast } from "sonner";
 
 export default function ContactPage() {
     const { t } = useLanguage();
     const [loading, setLoading] = useState(false);
+    // Service selector state supports curated options + custom service entry.
+    const [selectedServiceOption, setSelectedServiceOption] = useState("");
+    const [customService, setCustomService] = useState("");
+
+    // Curated services shown in the contact form dropdown.
+    const curatedServices = [
+        "Birth Chart Analysis",
+        "Name Suggestion",
+        "Lucky Number & Color",
+        "Gemstone Recommendation",
+        "Marriage / Relationship Guidance",
+        "Health & Wellness Guidance",
+        "Financial / Career Guidance",
+        "Dosha Remedies",
+        "Spiritual Protection",
+    ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Build WhatsApp payload from current form inputs.
+        const form = e.target as HTMLFormElement;
+        const formData = new FormData(form);
+        const name = String(formData.get("name") || "").trim();
+        const email = String(formData.get("email") || "").trim();
+        const phone = String(formData.get("phone") || "").trim();
+        const service = selectedServiceOption === "other"
+            ? customService.trim()
+            : selectedServiceOption.trim();
+        const concern = String(formData.get("concern") || "").trim();
+
+        const message = [
+            "Namaste Guruji, I would like to connect for consultation.",
+            "",
+            `Name: ${name || "N/A"}`,
+            `Email: ${email || "N/A"}`,
+            `Phone: ${phone || "N/A"}`,
+            `Service Needed: ${service || "N/A"}`,
+            `Concern: ${concern || "N/A"}`,
+        ].join("\n");
+
         setLoading(true);
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        // Open WhatsApp chat with prefilled consultation details.
+        window.open(
+            `https://wa.me/919448313270?text=${encodeURIComponent(message)}`,
+            "_blank",
+            "noopener,noreferrer",
+        );
         setLoading(false);
-        toast.success(t("messageSent"));
-        (e.target as HTMLFormElement).reset();
+        toast.success("Opening WhatsApp with your details...");
+        form.reset();
+        setSelectedServiceOption("");
+        setCustomService("");
     };
 
     const contactInfo = [
@@ -36,7 +80,7 @@ export default function ContactPage() {
             icon: MessageCircle,
             title: t("whatsapp"),
             value: "+91 94483 13270",
-            href: "https://wa.me/919448313270",
+            href: `https://wa.me/919448313270?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`,
             color: "text-green-600",
             bg: "bg-green-600/10",
         },
@@ -67,11 +111,11 @@ export default function ContactPage() {
                 </div>
             </section>
 
-            <section className="py-16 lg:py-24">
+            <section className="overflow-x-hidden py-16 lg:py-24">
                 <div className="mx-auto max-w-7xl px-4 lg:px-8">
                     <div className="grid gap-12 lg:grid-cols-2">
                         {/* Contact Details */}
-                        <div className="space-y-8">
+                        <div className="min-w-0 space-y-8">
                             <div>
                                 <h2 className="font-serif text-2xl font-bold text-maroon lg:text-3xl">
                                     {t("contactTitle")}
@@ -82,23 +126,23 @@ export default function ContactPage() {
                                 </p>
                             </div>
 
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+                            <div className="card-reveal grid gap-6 sm:grid-cols-2 lg:grid-cols-1" style={{ ["--reveal-delay" as any]: "90ms" }}>
                                 {contactInfo.map((item) => (
                                     <a
                                         key={item.title}
                                         href={item.href}
                                         target={item.icon === MessageCircle ? "_blank" : undefined}
                                         rel={item.icon === MessageCircle ? "noopener noreferrer" : undefined}
-                                        className="flex items-center gap-4 rounded-xl border border-gold/10 bg-card p-4 transition-all hover:border-gold/30 hover:shadow-md"
+                                        className="flex min-w-0 items-center gap-4 rounded-xl border border-gold/10 bg-card p-4 transition-all hover:border-gold/30 hover:shadow-md"
                                     >
                                         <div className={`flex size-12 items-center justify-center rounded-lg ${item.bg} ${item.color}`}>
                                             <item.icon className="size-6" />
                                         </div>
-                                        <div>
+                                        <div className="min-w-0">
                                             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                                                 {item.title}
                                             </p>
-                                            <p className="text-lg font-semibold text-maroon">{item.value}</p>
+                                            <p className="truncate text-lg font-semibold text-maroon">{item.value}</p>
                                         </div>
                                     </a>
                                 ))}
@@ -127,8 +171,8 @@ export default function ContactPage() {
                         </div>
 
                         {/* Contact Form */}
-                        <Card className="border-gold/20 shadow-lg">
-                            <CardContent className="p-8">
+                        <Card className="card-reveal min-w-0 border-gold/20 shadow-lg" style={{ ["--reveal-delay" as any]: "130ms" }}>
+                            <CardContent className="min-w-0 p-8">
                                 <h3 className="mb-6 font-serif text-xl font-bold text-maroon">
                                     {t("sendMessage")}
                                 </h3>
@@ -136,24 +180,47 @@ export default function ContactPage() {
                                     <div className="grid gap-6 sm:grid-cols-2">
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-maroon">{t("yourName")}</label>
-                                            <Input placeholder="John Doe" required />
+                                            <Input name="name" placeholder="name" required />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-maroon">{t("email")}</label>
-                                            <Input type="email" placeholder="john@example.com" required />
+                                            <Input name="email" type="email" placeholder="name@example.com" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-maroon">{t("phoneNumber")}</label>
-                                        <Input type="tel" placeholder="+91 90000 00000" />
+                                        <Input name="phone" type="tel" placeholder="+91 90000 00000" />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-maroon">{t("selectService")}</label>
-                                        <Input placeholder="e.g. Birth Chart Analysis" />
+                                        <Select
+                                            value={selectedServiceOption}
+                                            onValueChange={setSelectedServiceOption}
+                                        >
+                                            <SelectTrigger className="w-full min-w-0 border-gold/20 bg-card">
+                                                <SelectValue placeholder="Choose a service" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {curatedServices.map((serviceItem) => (
+                                                    <SelectItem key={serviceItem} value={serviceItem}>
+                                                        {serviceItem}
+                                                    </SelectItem>
+                                                ))}
+                                                <SelectItem value="other">Other (Type custom)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {selectedServiceOption === "other" && (
+                                            <Input
+                                                value={customService}
+                                                onChange={(e) => setCustomService(e.target.value)}
+                                                placeholder="Type your service requirement"
+                                            />
+                                        )}
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-maroon">{t("describeYourConcern")}</label>
                                         <Textarea
+                                            name="concern"
                                             placeholder="Your message here..."
                                             className="min-h-[120px]"
                                             required
@@ -189,3 +256,6 @@ export default function ContactPage() {
         </div>
     );
 }
+
+
+

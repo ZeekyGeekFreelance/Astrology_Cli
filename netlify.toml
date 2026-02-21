@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # next-sanity@9.x has not yet declared peer dep support for next@16.
+  # The packages are runtime-compatible; this flag bypasses the strict check.
+  NPM_FLAGS = "--legacy-peer-deps"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

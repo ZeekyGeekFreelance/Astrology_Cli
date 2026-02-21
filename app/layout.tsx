@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { LayoutShell } from "@/components/layout-shell";
 import "./globals.css";
 
+// Fonts are preloaded here so all pages share the same typography tokens.
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 const _playfair = Playfair_Display({
@@ -17,7 +18,6 @@ export const metadata: Metadata = {
   title: "VedicSages - Vedic Astrology & Spiritual Guidance",
   description:
     "Unlock your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.",
-  generator: "v0.app",
   icons: {
     icon: [
       {
@@ -49,8 +49,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
+        {/* App-wide providers, header/footer shell, and route content */}
         <LayoutShell>{children}</LayoutShell>
+        {/* Global toast notifications */}
         <Toaster />
+        {/* Vercel page analytics */}
         <Analytics />
       </body>
     </html>

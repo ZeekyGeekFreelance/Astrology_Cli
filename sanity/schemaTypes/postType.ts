@@ -37,6 +37,19 @@ export const postType = defineType({
         {
           type: "image",
           options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "externalUrl",
+              title: "Or Paste Image URL",
+              type: "url",
+              description: "Optional: use external URL instead of upload",
+            }),
+            defineField({
+              name: "alt",
+              title: "Alt Text",
+              type: "string",
+            }),
+          ],
         },
       ],
     }),
@@ -58,9 +71,21 @@ export const postType = defineType({
       name: "image",
       title: "Featured Image",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "externalUrl",
+          title: "Or Paste Image URL",
+          type: "url",
+          description: "Optional: use external URL instead of upload",
+        }),
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          description: "Describe the featured image for accessibility and SEO",
+        }),
+      ],
     }),
     defineField({
       name: "author",

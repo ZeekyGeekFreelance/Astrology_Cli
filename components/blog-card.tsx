@@ -1,18 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { format } from "date-fns";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { urlFor } from "@/lib/sanity/image";
+import { resolveCardPostImageUrl, resolveImageAlt } from "@/lib/blog-image-resolver";
 
 interface BlogCardProps {
     post: {
         title: string;
         slug: { current: string };
         excerpt?: string;
-        image?: any;
+        image?: {
+            alt?: string;
+            externalUrl?: string;
+            asset?: { _ref: string };
+        };
+        externalImageUrl?: string;
         publishedAt: string;
         author?: string;
         category: string;
@@ -20,7 +24,7 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
-    const imageUrl = post.image ? urlFor(post.image).url() : null;
+    const imageUrl = resolveCardPostImageUrl(post);
 
     return (
         <article className="group overflow-hidden rounded-lg border border-gold/20 bg-card transition-all hover:border-gold/40 hover:shadow-lg">
@@ -28,7 +32,7 @@ export function BlogCard({ post }: BlogCardProps) {
                 {imageUrl ? (
                     <img
                         src={imageUrl}
-                        alt={post.title}
+                        alt={resolveImageAlt(post.image, post.title)}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                 ) : (

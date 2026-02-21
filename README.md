@@ -1,6 +1,5 @@
 ## 🌟 Features
 
-- **Daily Panchang**: Real-time Vedic calendar data including Tithi, Nakshatra, Yoga, and Karana, managed via Sanity CMS.
 - **Multilingual Support**: Full localization for **English, Hindi, and Kannada** across the entire platform.
 - **Personalized Recommendations**: Interactive tools for discovering lucky names, numbers, colors, and gemstones based on birth details.
 - **Vedic Services**: Specialized consultations for health, wealth, career, legal matters, and children's welfare.
@@ -42,6 +41,7 @@
     ```env
     NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
     NEXT_PUBLIC_SANITY_DATASET=production
+    SANITY_API_WRITE_TOKEN=your_write_token
     ```
 
 ### Development
@@ -64,6 +64,21 @@ npm run build
 npx next build
 ```
 
+### Seed Sanity Blog Data
+
+Use this to create/update sample blog posts in Sanity for testing.
+
+1. Ensure `SANITY_API_WRITE_TOKEN` is present in `.env.local` with write access.
+2. Run:
+
+```bash
+npx ts-node -T scripts/seed-sanity.ts
+```
+
+What this script does:
+- Upserts multiple sample blog posts across categories.
+- Reuses fixed IDs so reruns update existing seeded posts instead of duplicating them.
+
 ## 🚢 Deployment
 
 The project is optimized for deployment on **Netlify** or **Vercel**.
@@ -85,7 +100,7 @@ The project is optimized for deployment on **Netlify** or **Vercel**.
 
 ## 🖊️ Content Management (CMS)
 
-To edit blog posts, Panchang data, and other content, visit the **Sanity Studio** at:
+To edit blog posts and other content, visit the **Sanity Studio** at:
 
 ```
 https://<your-production-domain>/admin
@@ -96,3 +111,4 @@ https://<your-production-domain>/admin
 Log in with your Sanity account to manage all content.
 
 ---
+

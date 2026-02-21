@@ -14,12 +14,12 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
+// Main dictionary for shared UI labels/content across all supported languages.
 const translations: Record<Language, Record<string, string>> = {
   en: {
     // Navigation
     home: "Home",
     services: "Services",
-    panchang: "Panchang",
     blog: "Blog",
     contact: "Contact",
     birthChart: "Birth Chart",
@@ -78,13 +78,6 @@ const translations: Record<Language, Record<string, string>> = {
     phone: "Phone",
     whatsapp: "WhatsApp",
 
-    // Panchang
-    panchangTitle: "Today's Panchang",
-    tithi: "Tithi",
-    vara: "Vara (Day)",
-    nakshatra: "Nakshatra",
-    yoga: "Yoga",
-    karana: "Karana",
 
     // Form
     yourName: "Your Name",
@@ -114,7 +107,7 @@ const translations: Record<Language, Record<string, string>> = {
     ctaDescription:
       "Take the first step towards cosmic clarity and divine guidance",
     bookConsultation: "Book Consultation",
-
+    callExpert: "Call Expert",
     personalityDevelopment: "Personality Development",
 
     // Recommendations
@@ -127,7 +120,34 @@ const translations: Record<Language, Record<string, string>> = {
     calculationResults: "Calculation Results",
     selectNakshatra: "Select Nakshatra",
     selectRaashi: "Select Raashi",
-
+    recommendationsHeroSubtitle: "Ancient Vedic astrology combined with modern calculation to reveal your cosmic favorites",
+    recommendationsHowItWorksTitle: "How it works",
+    recommendationsHowItWorksBody: "Our recommendation engine uses your Nakshatra (birth star) and Raashi (moon sign) to identify syllables, numbers, and colors that resonate with your planetary energy. These elements are calculated based on traditional Jyotish principles to enhance your cosmic harmony and attract prosperity.",
+    recommendationsApplyingRemediesTitle: "Applying Remedies",
+    recommendationsApplyingRemediesBody: "While these recommendations provide a great starting point, a full Birth Chart Analysis (Kundali) is recommended for deeper life challenges. Incorporating your lucky colors and numbers into daily routines helps align your energy with the beneficial planetary transits.",
+    recommendationsQuote: "The stars guide us, but we must choose to follow the path of light.",
+    recommendationsMethodHint: "Select your preferred method and find your cosmic alignment",
+    recommendationsWesternZodiac: "Western Zodiac",
+    recommendationsWesternShort: "Western",
+    recommendationsVedicBirthChart: "Vedic (Birth Chart)",
+    recommendationsVedicShort: "Vedic",
+    recommendationsChooseNakshatra: "Choose Nakshatra",
+    recommendationsBirthStarHint: "Based on your birth star",
+    recommendationsChooseRaashi: "Choose Raashi",
+    recommendationsMoonSignHint: "Based on your moon sign",
+    recommendationsSelectSunSign: "Select Your Sun Sign",
+    recommendationsClickZodiac: "Click on your zodiac card to begin",
+    recommendationsGenerating: "Generating...",
+    recommendationsAccordingToZodiac: "According to Zodiac",
+    recommendationsRecommendedSyllables: "Recommended starting syllables",
+    recommendationsPrimaryCosmicNumber: "Primary cosmic number",
+    recommendationsAuraEnhancingColor: "Aura enhancing color",
+    recommendationsBalancingStone: "Balancing planetary stone",
+    recommendationsSeekDeeperGuidance: "Seek Deeper Guidance",
+    recommendationsPersonalizedReading: "Want a Personalised Reading?",
+    recommendationsPersonalizedReadingDesc: "Your cosmic blueprint goes beyond numbers. Connect with our Vedic experts for a deeper interpretation of your birth chart and life path.",
+    recommendationsCallAstrologer: "Call an Astrologer",
+    recommendationsChatWhatsApp: "Chat on WhatsApp",
     // Services Page
     servicesPageTitle: "Our Sacred Services",
     servicesPageSubtitle:
@@ -143,13 +163,6 @@ const translations: Record<Language, Record<string, string>> = {
     backToBlog: "Back to Blog",
     recentPosts: "Recent Posts",
 
-    // Panchang Page
-    panchangPageTitle: "Daily Panchang",
-    panchangPageSubtitle: "Sacred Hindu calendar for auspicious timings",
-    sunrise: "Sunrise",
-    sunset: "Sunset",
-    specialEvent: "Special Event",
-    noData: "Panchang data is not available for today. Please check back later.",
 
     // Contact Page
     contactPageTitle: "Get in Touch",
@@ -164,7 +177,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Navigation
     home: "होम",
     services: "सेवाएं",
-    panchang: "पंचांग",
     blog: "ब्लॉग",
     contact: "संपर्क",
     birthChart: "जन्म कुंडली",
@@ -224,13 +236,6 @@ const translations: Record<Language, Record<string, string>> = {
     phone: "फ़ोन",
     whatsapp: "व्हाट्सएप",
 
-    // Panchang
-    panchangTitle: "आज का पंचांग",
-    tithi: "तिथि",
-    vara: "वार (दिन)",
-    nakshatra: "नक्षत्र",
-    yoga: "योग",
-    karana: "करण",
 
     // Form
     yourName: "आपका नाम",
@@ -256,10 +261,10 @@ const translations: Record<Language, Record<string, string>> = {
     consultations: "परामर्श",
 
     // CTA
-    ctaTitle: "अपना जीवन बदलने के लिए तैयार हैं?",
+    ctaTitle: "अपना जीवन बदलने के लिए तैयार हैं ?",
     ctaDescription: "ब्रह्मांडीय स्पष्टता और दिव्य मार्गदर्शन की ओर पहला कदम उठाएं",
     bookConsultation: "परामर्श बुक करें",
-
+    callExpert: "विशेषज्ञ से जुड़े",
     personalityDevelopment: "व्यक्तित्व विकास",
 
     // Services Page
@@ -276,13 +281,6 @@ const translations: Record<Language, Record<string, string>> = {
     backToBlog: "ब्लॉग पर वापस",
     recentPosts: "हाल की पोस्ट",
 
-    // Panchang Page
-    panchangPageTitle: "दैनिक पंचांग",
-    panchangPageSubtitle: "शुभ समय के लिए पवित्र हिंदू कैलेंडर",
-    sunrise: "सूर्योदय",
-    sunset: "सूर्यास्त",
-    specialEvent: "विशेष आयोजन",
-    noData: "आज के लिए पंचांग डेटा उपलब्ध नहीं है। कृपया बाद में पुनः जाँचें।",
 
     // Contact Page
     contactPageTitle: "संपर्क करें",
@@ -297,7 +295,6 @@ const translations: Record<Language, Record<string, string>> = {
     // Navigation
     home: "ಮುಖಪುಟ",
     services: "ಸೇವೆಗಳು",
-    panchang: "ಪಂಚಾಂಗ",
     blog: "ಬ್ಲಾಗ್",
     contact: "ಸಂಪರ್ಕ",
     birthChart: "ಜನ್ಮ ಕುಂಡಲಿ",
@@ -357,13 +354,6 @@ const translations: Record<Language, Record<string, string>> = {
     phone: "ದೂರವಾಣಿ",
     whatsapp: "ವಾಟ್ಸಾಪ್",
 
-    // Panchang
-    panchangTitle: "ಇಂದಿನ ಪಂಚಾಂಗ",
-    tithi: "ತಿಥಿ",
-    vara: "ವಾರ (ದಿನ)",
-    nakshatra: "ನಕ್ಷತ್ರ",
-    yoga: "ಯೋಗ",
-    karana: "ಕರಣ",
 
     // Form
     yourName: "ನಿಮ್ಮ ಹೆಸರು",
@@ -393,7 +383,7 @@ const translations: Record<Language, Record<string, string>> = {
     ctaDescription:
       "ವಿಶ್ವ ಸ್ಪಷ್ಟತೆ ಮತ್ತು ದೈವಿಕ ಮಾರ್ಗದರ್ಶನದ ಕಡೆಗೆ ಮೊದಲ ಹೆಜ್ಜೆ ಇಡಿ",
     bookConsultation: "ಸಮಾಲೋಚನೆ ಬುಕ್ ಮಾಡಿ",
-
+    callExpert: "ತಜ್ಞರೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಿ",
     personalityDevelopment: "ವ್ಯಕ್ತಿತ್ವ ಅಭಿವೃದ್ಧಿ",
 
     // Services Page
@@ -412,14 +402,6 @@ const translations: Record<Language, Record<string, string>> = {
     backToBlog: "ಬ್ಲಾಗ್\u200Cಗೆ ಹಿಂತಿರುಗಿ",
     recentPosts: "ಇತ್ತೀಚಿನ ಪೋಸ್ಟ್\u200Cಗಳು",
 
-    // Panchang Page
-    panchangPageTitle: "ದೈನಿಕ ಪಂಚಾಂಗ",
-    panchangPageSubtitle: "ಶುಭ ಸಮಯಗಳಿಗಾಗಿ ಪವಿತ್ರ ಹಿಂದೂ ಕ್ಯಾಲೆಂಡರ್",
-    sunrise: "ಸೂರ್ಯೋದಯ",
-    sunset: "ಸೂರ್ಯಾಸ್ತ",
-    specialEvent: "ವಿಶೇಷ ಕಾರ್ಯಕ್ರಮ",
-    noData:
-      "ಇಂದಿನ ಪಂಚಾಂಗ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ.",
 
     // Contact Page
     contactPageTitle: "ಸಂಪರ್ಕದಲ್ಲಿರಿ",
@@ -433,10 +415,101 @@ const translations: Record<Language, Record<string, string>> = {
   },
 };
 
+// Targeted overrides for recommendation flow where wording differs by locale.
+const recommendationTranslations: Record<Exclude<Language, "en">, Record<string, string>> = {
+  hi: {
+    recommendations: "परामर्श",
+    luckyNames: "शुभ नाम",
+    luckyNamesDesc: "नक्षत्र के आधार पर नाम सुझाव पाएँ",
+    luckyNumberAndColor: "शुभ अंक और रंग",
+    luckyNumberAndColorDesc: "अपने कॉस्मिक पावर नंबर और रंग जानें",
+    generate: "जनरेट करें",
+    calculationResults: "परिणाम",
+    selectNakshatra: "नक्षत्र चुनें",
+    selectRaashi: "राशि चुनें",
+    recommendationsHeroSubtitle:
+      "प्राचीन वैदिक ज्योतिष और आधुनिक गणना का संगम, आपके लिए शुभ सुझाव।",
+    recommendationsHowItWorksTitle: "यह कैसे काम करता है",
+    recommendationsHowItWorksBody:
+      "हमारा इंजन आपके नक्षत्र और राशि के आधार पर ऐसे अक्षर, अंक और रंग सुझाता है जो आपकी ग्रह ऊर्जा से मेल खाते हैं।",
+    recommendationsApplyingRemediesTitle: "उपाय कैसे लागू करें",
+    recommendationsApplyingRemediesBody:
+      "ये सुझाव एक अच्छी शुरुआत हैं। गहरे जीवन प्रश्नों के लिए पूर्ण कुंडली विश्लेषण अधिक उपयोगी है।",
+    recommendationsQuote: "तारे मार्ग दिखाते हैं, चलना हमें ही होता है।",
+    recommendationsMethodHint: "अपना तरीका चुनें और कॉस्मिक सामंजस्य जानें",
+    recommendationsWesternZodiac: "पश्चिमी राशि",
+    recommendationsWesternShort: "पश्चिमी",
+    recommendationsVedicBirthChart: "वैदिक (कुंडली)",
+    recommendationsVedicShort: "वैदिक",
+    recommendationsChooseNakshatra: "नक्षत्र चुनें",
+    recommendationsBirthStarHint: "जन्म नक्षत्र के आधार पर",
+    recommendationsChooseRaashi: "राशि चुनें",
+    recommendationsMoonSignHint: "चंद्र राशि के आधार पर",
+    recommendationsSelectSunSign: "अपनी सूर्य राशि चुनें",
+    recommendationsClickZodiac: "शुरू करने के लिए राशि कार्ड चुनें",
+    recommendationsGenerating: "जनरेट हो रहा है...",
+    recommendationsAccordingToZodiac: "राशि के अनुसार",
+    recommendationsRecommendedSyllables: "सुझाए गए शुरुआती अक्षर",
+    recommendationsPrimaryCosmicNumber: "मुख्य कॉस्मिक नंबर",
+    recommendationsAuraEnhancingColor: "आभा बढ़ाने वाला रंग",
+    recommendationsBalancingStone: "ग्रह संतुलन के लिए रत्न",
+    recommendationsSeekDeeperGuidance: "और गहरा मार्गदर्शन",
+    recommendationsPersonalizedReading: "क्या आप व्यक्तिगत रीडिंग चाहते हैं?",
+    recommendationsPersonalizedReadingDesc:
+      "आपका कॉस्मिक ब्लूप्रिंट केवल अंकों से आगे है। विस्तृत वैदिक मार्गदर्शन के लिए हमारे विशेषज्ञों से जुड़ें।",
+    recommendationsCallAstrologer: "ज्योतिषी को कॉल करें",
+    recommendationsChatWhatsApp: "व्हाट्सऐप पर चैट करें",
+  },
+  kn: {
+    recommendations: "ಶಿಫಾರಸುಗಳು",
+    luckyNames: "ಶುಭ ಹೆಸರುಗಳು",
+    luckyNamesDesc: "ನಕ್ಷತ್ರದ ಆಧಾರದ ಮೇಲೆ ಹೆಸರು ಸಲಹೆಗಳು",
+    luckyNumberAndColor: "ಅದೃಷ್ಟ ಸಂಖ್ಯೆ ಮತ್ತು ಬಣ್ಣ",
+    luckyNumberAndColorDesc: "ನಿಮ್ಮ ಕಾಸ್ಮಿಕ ಪವರ್ ಸಂಖ್ಯೆ ಮತ್ತು ಬಣ್ಣ ತಿಳಿಯಿರಿ",
+    generate: "ರಚಿಸಿ",
+    calculationResults: "ಫಲಿತಾಂಶಗಳು",
+    selectNakshatra: "ನಕ್ಷತ್ರ ಆಯ್ಕೆಮಾಡಿ",
+    selectRaashi: "ರಾಶಿ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsHeroSubtitle:
+      "ಪ್ರಾಚೀನ ವೇದಿಕ ಜ್ಯೋತಿಷ್ಯ ಮತ್ತು ಆಧುನಿಕ ಗಣನೆಯ ಸಂಗಮದಿಂದ ನಿಮ್ಮ ಶುಭ ಆಯ್ಕೆಗಳು.",
+    recommendationsHowItWorksTitle: "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
+    recommendationsHowItWorksBody:
+      "ನಿಮ್ಮ ನಕ್ಷತ್ರ ಮತ್ತು ರಾಶಿಯ ಆಧಾರದ ಮೇಲೆ ನಿಮ್ಮ ಗ್ರಹಶಕ್ತಿಗೆ ಹೊಂದುವ ಅಕ್ಷರ, ಸಂಖ್ಯೆ ಮತ್ತು ಬಣ್ಣಗಳನ್ನು ಇದು ಸೂಚಿಸುತ್ತದೆ.",
+    recommendationsApplyingRemediesTitle: "ಉಪಾಯಗಳನ್ನು ಅನ್ವಯಿಸುವುದು",
+    recommendationsApplyingRemediesBody:
+      "ಈ ಸಲಹೆಗಳು ಒಳ್ಳೆಯ ಆರಂಭ. ಆಳವಾದ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸಂಪೂರ್ಣ ಕುಂಡಲಿ ವಿಶ್ಲೇಷಣೆ ಸಹಾಯಕ.",
+    recommendationsQuote: "ನಕ್ಷತ್ರಗಳು ದಾರಿಯನ್ನು ತೋರಿಸುತ್ತವೆ, ನಡೆಯುವುದು ನಮ್ಮ ಕೆಲಸ.",
+    recommendationsMethodHint: "ನಿಮಗೆ ಸೂಕ್ತ ವಿಧಾನ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsWesternZodiac: "ಪಾಶ್ಚಾತ್ಯ ರಾಶಿ",
+    recommendationsWesternShort: "ಪಾಶ್ಚಾತ್ಯ",
+    recommendationsVedicBirthChart: "ವೇದಿಕ (ಕುಂಡಲಿ)",
+    recommendationsVedicShort: "ವೇದಿಕ",
+    recommendationsChooseNakshatra: "ನಕ್ಷತ್ರ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsBirthStarHint: "ಜನ್ಮ ನಕ್ಷತ್ರದ ಆಧಾರದಲ್ಲಿ",
+    recommendationsChooseRaashi: "ರಾಶಿ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsMoonSignHint: "ಚಂದ್ರ ರಾಶಿಯ ಆಧಾರದಲ್ಲಿ",
+    recommendationsSelectSunSign: "ನಿಮ್ಮ ಸೂರ್ಯ ರಾಶಿ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsClickZodiac: "ಆರಂಭಿಸಲು ರಾಶಿ ಕಾರ್ಡ್ ಆಯ್ಕೆಮಾಡಿ",
+    recommendationsGenerating: "ರಚಿಸಲಾಗುತ್ತಿದೆ...",
+    recommendationsAccordingToZodiac: "ರಾಶಿಯ ಪ್ರಕಾರ",
+    recommendationsRecommendedSyllables: "ಶಿಫಾರಸಾದ ಆರಂಭದ ಅಕ್ಷರಗಳು",
+    recommendationsPrimaryCosmicNumber: "ಮುಖ್ಯ ಕಾಸ್ಮಿಕ ಸಂಖ್ಯೆ",
+    recommendationsAuraEnhancingColor: "ಆಭಾ ಹೆಚ್ಚಿಸುವ ಬಣ್ಣ",
+    recommendationsBalancingStone: "ಗ್ರಹ ಸಮತೋಲನದ ರತ್ನ",
+    recommendationsSeekDeeperGuidance: "ಇನ್ನಷ್ಟು ಆಳವಾದ ಮಾರ್ಗದರ್ಶನ",
+    recommendationsPersonalizedReading: "ವೈಯಕ್ತಿಕ ಓದು ಬೇಕೆ?",
+    recommendationsPersonalizedReadingDesc:
+      "ನಿಮ್ಮ ಕಾಸ್ಮಿಕ ರೂಪರೇಖೆ ಸಂಖ್ಯೆಗಳಿಗಿಂತ ಹೆಚ್ಚಿನದು. ವಿವರವಾದ ವೇದಿಕ ಮಾರ್ಗದರ್ಶನಕ್ಕಾಗಿ ನಮ್ಮ ತಜ್ಞರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+    recommendationsCallAstrologer: "ಜ್ಯೋತಿಷಿಗೆ ಕರೆ ಮಾಡಿ",
+    recommendationsChatWhatsApp: "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಚಾಟ್ ಮಾಡಿ",
+  },
+};
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("en");
 
   useEffect(() => {
+    // Restore previously selected language from local storage.
     const saved = localStorage.getItem("vedicsages_language");
     if (saved && translations[saved as Language]) {
       setLanguage(saved as Language);
@@ -444,11 +517,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const changeLanguage = (lang: Language) => {
+    // Persist language choice so refresh/navigation keeps the same locale.
     setLanguage(lang);
     localStorage.setItem("vedicsages_language", lang);
   };
 
   const t = (key: string): string => {
+    // Resolve key from recommendation overrides first, then main dictionary.
+    if (language !== "en" && recommendationTranslations[language]?.[key]) {
+      return recommendationTranslations[language][key];
+    }
     return translations[language]?.[key] || translations.en[key] || key;
   };
 
@@ -468,3 +546,4 @@ export function useLanguage() {
 }
 
 export default LanguageContext;
+

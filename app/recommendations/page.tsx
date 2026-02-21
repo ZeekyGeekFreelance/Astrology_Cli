@@ -21,7 +21,7 @@ export default function RecommendationsPage() {
                         {t("recommendations")}
                     </h1>
                     <p className="mt-3 text-cream/80">
-                        Ancient Vedic astrology combined with modern calculation to reveal your cosmic favorites
+                        {t("recommendationsHeroSubtitle")}
                     </p>
                 </div>
             </section>
@@ -29,24 +29,21 @@ export default function RecommendationsPage() {
             {/* Main Content */}
             <section className="py-16 lg:py-24 bg-muted/30">
                 <div className="mx-auto max-w-4xl px-4 lg:px-8">
+                    {/* Interactive recommendation form and result flow */}
                     <RecommendationForms />
 
                     {/* Additional Info */}
-                    <div className="mt-16 grid gap-8 sm:grid-cols-2">
+                    <div className="card-reveal mt-16 grid gap-8 sm:grid-cols-2" style={{ ["--reveal-delay" as any]: "110ms" }}>
                         <div className="rounded-xl border border-gold/10 bg-card p-8">
-                            <h3 className="font-serif text-xl font-bold text-maroon mb-4">How it works</h3>
+                            <h3 className="font-serif text-xl font-bold text-maroon mb-4">{t("recommendationsHowItWorksTitle")}</h3>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                                Our recommendation engine uses your Nakshatra (birth star) and Raashi (moon sign) to identify
-                                syllables, numbers, and colors that resonate with your planetary energy. These elements are
-                                calculated based on traditional Jyotish principles to enhance your cosmic harmony and attract prosperity.
+                                {t("recommendationsHowItWorksBody")}
                             </p>
                         </div>
                         <div className="rounded-xl border border-gold/10 bg-card p-8">
-                            <h3 className="font-serif text-xl font-bold text-maroon mb-4">Applying Remedies</h3>
+                            <h3 className="font-serif text-xl font-bold text-maroon mb-4">{t("recommendationsApplyingRemediesTitle")}</h3>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                                While these recommendations provide a great starting point, a full Birth Chart Analysis (Kundali)
-                                is recommended for deeper life challenges. Incorporating your lucky colors and numbers into
-                                daily routines helps align your energy with the beneficial planetary transits.
+                                {t("recommendationsApplyingRemediesBody")}
                             </p>
                         </div>
                     </div>
@@ -57,9 +54,11 @@ export default function RecommendationsPage() {
             <section className="py-12 bg-white text-center border-t border-gold/10">
                 <Sparkles className="mx-auto size-8 text-gold opacity-50 mb-4" />
                 <h2 className="font-serif text-2xl text-maroon italic opacity-80 px-4">
-                    "The stars guide us, but we must choose to follow the path of light."
+                    {t("recommendationsQuote")}
                 </h2>
             </section>
         </div>
     );
 }
+
+

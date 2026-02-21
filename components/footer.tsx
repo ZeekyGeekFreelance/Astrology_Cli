@@ -7,7 +7,6 @@ import { useLanguage } from "@/lib/language-context";
 const quickLinks = [
   { key: "home", href: "/" },
   { key: "services", href: "/services" },
-  { key: "panchang", href: "/panchang" },
   { key: "blog", href: "/blog" },
   { key: "contact", href: "/contact" },
 ];
@@ -67,7 +66,7 @@ export function Footer() {
                 +91 94807 08383
               </a>
               <a
-                href="https://wa.me/919448313270"
+                href={`https://wa.me/919448313270?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-cream/80 transition-all hover:text-gold active:scale-95"
@@ -89,3 +88,5 @@ export function Footer() {
     </footer>
   );
 }
+
+

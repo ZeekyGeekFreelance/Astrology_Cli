@@ -3,43 +3,118 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Sparkles, Filter } from "lucide-react";
 import { BlogCard } from "@/components/blog-card";
-import { DecorativeDivider } from "@/components/decorative-border";
 import { useLanguage } from "@/lib/language-context";
-import { client } from "@/lib/sanity/client";
-import { POSTS_QUERY, POSTS_BY_CATEGORY_QUERY } from "@/lib/sanity/queries";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 const categories = [
     { key: "all", value: "all" },
-    { key: "daily-horoscope", value: "daily-horoscope" },
     { key: "vedic-knowledge", value: "vedic-knowledge" },
     { key: "remedies", value: "remedies" },
     { key: "festivals", value: "festivals" },
 ];
 
 export default function BlogPage() {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const [posts, setPosts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [activeCategory, setActiveCategory] = useState("all");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(6);
+
+    const categoryLabelMap: Record<string, Record<string, string>> = {
+        en: {
+            all: t("allCategories"),
+            "vedic-knowledge": "Vedic Knowledge",
+            remedies: "Remedies",
+            festivals: "Festivals",
+        },
+        hi: {
+            all: t("allCategories"),
+            "vedic-knowledge": "वैदिक ज्ञान",
+            remedies: "उपाय",
+            festivals: "त्योहार",
+        },
+        kn: {
+            all: t("allCategories"),
+            "vedic-knowledge": "ವೈದಿಕ ಜ್ಞಾನ",
+            remedies: "ಪರಿಹಾರಗಳು",
+            festivals: "ಹಬ್ಬಗಳು",
+        },
+    };
+
+    const getCategoryLabel = (categoryKey: string) =>
+        categoryLabelMap[language]?.[categoryKey] ?? categoryLabelMap.en[categoryKey] ?? categoryKey;
+
+    const totalPages = Math.max(1, Math.ceil(posts.length / postsPerPage));
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const paginatedPosts = posts.slice(startIndex, endIndex);
+    const hasPagination = posts.length > postsPerPage;
+
+    const fetchPosts = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const categoryQuery =
+                activeCategory === "all" ? "" : `?category=${encodeURIComponent(activeCategory)}`;
+
+            let lastError: unknown = null;
+            for (let attempt = 0; attempt < 3; attempt++) {
+                try {
+                    const response = await fetch(`/api/blog-posts${categoryQuery}`, { cache: "no-store" });
+
+                    if (!response.ok) {
+                        throw new Error(`Blog posts request failed: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    setPosts(Array.isArray(data?.posts) ? data.posts : []);
+                    setLoading(false);
+                    return;
+                } catch (err) {
+                    lastError = err;
+                    if (attempt < 2) {
+                        await new Promise((resolve) => setTimeout(resolve, 350 * (attempt + 1)));
+                    }
+                }
+            }
+
+            throw lastError;
+        } catch (err) {
+            console.error("Error fetching posts:", err);
+            setPosts([]);
+            setError("Unable to load blog posts right now. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        async function fetchPosts() {
-            setLoading(true);
-            try {
-                const query = activeCategory === "all" ? POSTS_QUERY : POSTS_BY_CATEGORY_QUERY;
-                const params = activeCategory === "all" ? {} : { category: activeCategory };
-                const data = await client.fetch(query, params);
-                setPosts(data);
-            } catch (error) {
-                console.error("Error fetching posts:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
         fetchPosts();
     }, [activeCategory]);
+
+    useEffect(() => {
+        const updatePageSize = () => {
+            setPostsPerPage(window.innerWidth >= 1024 ? 6 : 4);
+        };
+
+        updatePageSize();
+        window.addEventListener("resize", updatePageSize);
+        return () => window.removeEventListener("resize", updatePageSize);
+    }, []);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [activeCategory]);
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
 
     return (
         <div className="min-h-screen">
@@ -65,21 +140,24 @@ export default function BlogPage() {
                     <div className="mb-12 flex flex-col items-center gap-6">
                         <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground uppercase tracking-widest">
                             <Filter className="size-4" />
-                            <span>{t("allCategories")}</span>
+                            <span>Filter By</span>
                         </div>
                         <Tabs
                             defaultValue="all"
                             className="w-full max-w-2xl"
-                            onValueChange={setActiveCategory}
+                            onValueChange={(value) => {
+                                setCurrentPage(1);
+                                setActiveCategory(value);
+                            }}
                         >
-                            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-muted/50 p-1">
+                            <TabsList className="grid h-auto w-full grid-cols-2 gap-1 bg-maroon/18 p-1.5 lg:grid-cols-4">
                                 {categories.map((cat) => (
                                     <TabsTrigger
                                         key={cat.value}
                                         value={cat.value}
-                                        className="data-[state=active]:bg-card data-[state=active]:text-saffron"
+                                        className="h-9 px-2 py-0 text-sm leading-none whitespace-nowrap bg-cream/90 text-maroon/80 data-[state=active]:bg-maroon/75 data-[state=active]:text-cream"
                                     >
-                                        {cat.key === "all" ? t("allCategories") : cat.key.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                                        {getCategoryLabel(cat.key)}
                                     </TabsTrigger>
                                 ))}
                             </TabsList>
@@ -87,8 +165,8 @@ export default function BlogPage() {
                     </div>
 
                     {loading ? (
-                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {Array.from({ length: 6 }).map((_, i) => (
+                        <div className="card-reveal is-visible grid gap-8 sm:grid-cols-2 lg:grid-cols-3" style={{ ["--reveal-delay" as any]: "80ms" }}>
+                            {Array.from({ length: postsPerPage }).map((_, i) => (
                                 <div key={i} className="flex flex-col gap-4">
                                     <Skeleton className="aspect-video w-full rounded-lg" />
                                     <Skeleton className="h-4 w-1/4" />
@@ -97,12 +175,54 @@ export default function BlogPage() {
                                 </div>
                             ))}
                         </div>
-                    ) : posts.length > 0 ? (
-                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {posts.map((post) => (
-                                <BlogCard key={post._id} post={post} />
-                            ))}
+                    ) : error ? (
+                        <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-gold/20 bg-card p-8 text-center">
+                            <p className="text-base text-maroon">{error}</p>
+                            <Button
+                                variant="outline"
+                                className="border-saffron text-saffron hover:bg-saffron hover:text-white"
+                                onClick={fetchPosts}
+                            >
+                                Retry
+                            </Button>
                         </div>
+                    ) : posts.length > 0 ? (
+                        <>
+                            <div className="card-reveal is-visible grid gap-8 sm:grid-cols-2 lg:grid-cols-3" style={{ ["--reveal-delay" as any]: "80ms" }}>
+                                {paginatedPosts.map((post) => (
+                                    <BlogCard key={post._id} post={post} />
+                                ))}
+                            </div>
+
+                            <div className="mt-10 flex flex-col items-center justify-center gap-4">
+                                <p className="text-sm text-muted-foreground">
+                                    Showing {startIndex + 1}-{Math.min(endIndex, posts.length)} of {posts.length} posts
+                                </p>
+                                <div className="flex items-center gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="border-gold/30 text-maroon bg-card hover:bg-gold/15 disabled:opacity-40"
+                                        disabled={currentPage === 1 || !hasPagination}
+                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    >
+                                        Previous
+                                    </Button>
+                                    <span className="min-w-20 text-center text-sm font-medium text-maroon">
+                                        {currentPage} / {totalPages}
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="border-gold/30 text-maroon bg-card hover:bg-gold/15 disabled:opacity-40"
+                                        disabled={currentPage === totalPages || !hasPagination}
+                                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    >
+                                        Next
+                                    </Button>
+                                </div>
+                            </div>
+                        </>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-20 text-center">
                             <Sparkles className="size-12 text-maroon/20 mb-4" />
@@ -116,3 +236,5 @@ export default function BlogPage() {
         </div>
     );
 }
+
+

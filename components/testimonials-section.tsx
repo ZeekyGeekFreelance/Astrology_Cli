@@ -34,6 +34,7 @@ export function TestimonialsSection() {
   const { t } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isAutoPlayPaused, setIsAutoPlayPaused] = useState(false);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -48,6 +49,16 @@ export function TestimonialsSection() {
     };
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi || isAutoPlayPaused) return;
+
+    const intervalId = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4500);
+
+    return () => clearInterval(intervalId);
+  }, [emblaApi, isAutoPlayPaused]);
+
   return (
     <section className="py-16 lg:py-24 bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -58,7 +69,13 @@ export function TestimonialsSection() {
           <DecorativeDivider className="mt-4" />
         </div>
 
-        <div className="relative px-6">
+        <div
+          className="relative px-6"
+          onMouseEnter={() => setIsAutoPlayPaused(true)}
+          onMouseLeave={() => setIsAutoPlayPaused(false)}
+          onTouchStart={() => setIsAutoPlayPaused(true)}
+          onTouchEnd={() => setIsAutoPlayPaused(false)}
+        >
           <div ref={emblaRef} className="overflow-hidden">
             <div className="flex -ml-4">
               {testimonials.map((item, idx) => (

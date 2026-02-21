@@ -20,16 +20,16 @@ const navLinks = [
   { key: "home", href: "/" },
   { key: "services", href: "/services" },
   { key: "recommendations", href: "/recommendations" },
-  { key: "panchang", href: "/panchang" },
   { key: "blog", href: "/blog" },
   { key: "contact", href: "/contact" },
 ];
 
 
 export function Header() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const isIndicLanguage = language === "hi" || language === "kn";
 
   return (
     <header className="sticky top-0 z-50 border-b border-gold/30 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
@@ -49,7 +49,8 @@ export function Header() {
               key={link.key}
               href={link.href}
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-saffron",
+                "rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted hover:text-saffron",
+                isIndicLanguage ? "font-semibold" : "font-medium",
                 pathname === link.href
                   ? "text-saffron bg-muted"
                   : "text-foreground"
@@ -91,7 +92,8 @@ export function Header() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "rounded-md px-3 py-3 text-base font-medium transition-colors hover:bg-muted hover:text-saffron",
+                      "rounded-md px-3 py-3 text-base transition-colors hover:bg-muted hover:text-saffron",
+                      isIndicLanguage ? "font-semibold" : "font-medium",
                       pathname === link.href
                         ? "text-saffron bg-muted"
                         : "text-foreground"

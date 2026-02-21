@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Star,
   Hash,
@@ -71,12 +71,92 @@ const detailedServices = [
 ];
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  // Dialog state for selected service card.
   const [selectedService, setSelectedService] = useState<typeof detailedServices[0] | null>(null);
+  // Refs below coordinate browser Back button behavior for the service dialog.
+  const selectedServiceRef = useRef<typeof detailedServices[0] | null>(null);
+  const hasModalHistoryEntryRef = useRef(false);
 
   const getWhatsAppLink = (serviceTitle: string) => {
     const message = `Namaste, I am interested in seeking guidance for ${serviceTitle}. Please let me know the process for consultation.`;
     return `https://wa.me/919448313270?text=${encodeURIComponent(message)}`;
+  };
+
+  const localTextMap: Record<string, Record<string, string>> = {
+    en: {
+      servicesDialogInsight:
+        "Our expert astrologers provide deep insights into this area of life, utilizing ancient Vedic principles, planetary alignments, and birth chart analysis to guide you towards the most auspicious path.",
+      servicesDialogConcernsTitle: "Common Concerns Addressed:",
+      callForConsultation: "Call for Consultation",
+      whatsappInquiry: "WhatsApp Inquiry",
+    },
+    hi: {
+      servicesDialogInsight:
+        "हमारे विशेषज्ञ ज्योतिषी जीवन के इस क्षेत्र में गहरी अंतर्दृष्टि प्रदान करते हैं। प्राचीन वैदिक सिद्धांत, ग्रहों की स्थितियाँ और जन्म कुंडली विश्लेषण के माध्यम से वे आपको सबसे शुभ मार्ग की ओर मार्गदर्शन करते हैं।",
+      servicesDialogConcernsTitle: "सामान्य चिंताएँ जिनका समाधान किया जाता है:",
+      callForConsultation: "परामर्श के लिए कॉल करें",
+      whatsappInquiry: "व्हाट्सएप पूछताछ",
+    },
+    kn: {
+      servicesDialogInsight:
+        "ನಮ್ಮ ಪರಿಣಿತ ಜ್ಯೋತಿಷಿಗಳು ಜೀವನದ ಈ ಕ್ಷೇತ್ರದ ಬಗ್ಗೆ ಆಳವಾದ ಒಳನೋಟಗಳನ್ನು ನೀಡುತ್ತಾರೆ. ಪ್ರಾಚೀನ ವೇದಿಕ ತತ್ವಗಳು, ಗ್ರಹ ಹೊಂದಾಣಿಕೆಗಳು ಮತ್ತು ಜನ್ಮಕುಂಡಲಿ ವಿಶ್ಲೇಷಣೆಯ ಮೂಲಕ ಅತ್ಯಂತ ಶುಭಕರ ಮಾರ್ಗದ ಕಡೆಗೆ ನಿಮ್ಮನ್ನು ದಾರಿದೀಪಗೊಳಿಸುತ್ತಾರೆ.",
+      servicesDialogConcernsTitle: "ಸಾಮಾನ್ಯವಾಗಿ ಪರಿಹರಿಸಲಾಗುವ ಚಿಂತನೆಗಳು:",
+      callForConsultation: "ಸಮಾಲೋಚನೆಗಾಗಿ ಕರೆ ಮಾಡಿ",
+      whatsappInquiry: "ವಾಟ್ಸಾಪ್ ವಿಚಾರಣೆ",
+    },
+  };
+
+  const st = (key: keyof typeof localTextMap.en) =>
+    localTextMap[language]?.[key] ?? localTextMap.en[key];
+
+  useEffect(() => {
+    // Keep latest dialog state accessible inside popstate callback.
+    selectedServiceRef.current = selectedService;
+  }, [selectedService]);
+
+  useEffect(() => {
+    // Push one history entry when dialog opens so Back closes dialog first.
+    if (typeof window === "undefined") return;
+
+    if (selectedService && !hasModalHistoryEntryRef.current) {
+      window.history.pushState(
+        { ...(window.history.state ?? {}), servicesModalOpen: true },
+        "",
+        window.location.href,
+      );
+      hasModalHistoryEntryRef.current = true;
+      return;
+    }
+
+    if (!selectedService) {
+      hasModalHistoryEntryRef.current = false;
+    }
+  }, [selectedService]);
+
+  useEffect(() => {
+    // If user presses Back while dialog is open, close it without leaving page.
+    const onPopState = () => {
+      if (selectedServiceRef.current) {
+        hasModalHistoryEntryRef.current = false;
+        setSelectedService(null);
+      }
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  const handleDialogOpenChange = (open: boolean) => {
+    // Route all dialog close actions through history-aware close logic.
+    if (open) return;
+
+    if (hasModalHistoryEntryRef.current) {
+      window.history.back();
+      return;
+    }
+
+    setSelectedService(null);
   };
 
   return (
@@ -112,7 +192,7 @@ export default function ServicesPage() {
             >
               <a href="tel:+919480708383">
                 <Phone className="size-4 mr-2" />
-                Call Expert
+                {t("callExpert")}
               </a>
             </Button>
           </div>
@@ -122,7 +202,7 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="card-reveal services-grid-reveal grid gap-6 md:grid-cols-2 lg:grid-cols-3" style={{ ["--reveal-delay" as any]: "90ms" }}>
             {detailedServices.map((service) => (
               <DetailedServiceCard
                 key={service.titleKey}
@@ -155,42 +235,72 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Detail Pop-up */}
-      <Dialog open={!!selectedService} onOpenChange={(open: boolean) => !open && setSelectedService(null)}>
-        <DialogContent className="sm:max-w-2xl border-gold/20 bg-background">
+      <Dialog open={!!selectedService} onOpenChange={handleDialogOpenChange}>
+        {/*
+          KEY CHANGES:
+          - Removed `max-h-[80vh] overflow-y-auto` from DialogContent
+          - DialogContent now uses flex-col to keep header/footer fixed
+          - Added a scrollable middle section with a fade gradient at the bottom
+        */}
+        <DialogContent className="w-[calc(100%-2rem)] border-gold/20 bg-background sm:max-w-2xl p-0 gap-0 overflow-hidden">
           {selectedService && (
-            <>
-              <DialogHeader>
-                <div className="flex items-center gap-4 mb-2">
-                  <div className="flex size-12 items-center justify-center rounded-xl bg-saffron/10 text-saffron">
+            <div className="flex flex-col" style={{ maxHeight: "80vh" }}>
+
+              {/* FIXED HEADER */}
+              <div className="flex-none px-6 pt-6 pb-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-saffron/10 text-saffron">
                     <selectedService.icon className="size-6" />
                   </div>
-                  <DialogTitle className="font-serif text-2xl font-bold text-maroon">
+                  {/* DialogTitle/Description kept for a11y but visually placed here */}
+                  <DialogTitle className="font-serif text-2xl font-bold text-maroon leading-tight">
                     {t(selectedService.titleKey)}
                   </DialogTitle>
                 </div>
-                <DialogDescription className="text-base text-muted-foreground leading-relaxed pt-2">
-                  {t(selectedService.descriptionKey)}
-                  <br /><br />
-                  Our expert astrologers provide deep insights into this area of life, utilizing ancient Vedic principles,
-                  planetary alignments, and birth chart analysis to guide you towards the most auspicious path.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="py-4">
-                <h4 className="text-sm font-semibold text-maroon uppercase tracking-wider mb-3">Common Concerns Addressed:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedService.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-maroon/5 border border-maroon/10 px-4 py-1 text-sm text-maroon/70"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              <DialogFooter className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gold/10">
+              {/* SCROLLABLE MIDDLE — grows to fill available space */}
+              <div className="relative flex-1 min-h-0">
+                <div className="h-full overflow-y-auto px-6 pb-4">
+                  <DialogDescription asChild>
+                    <div>
+                      <p className="text-base text-muted-foreground leading-relaxed">
+                        {t(selectedService.descriptionKey)}
+                      </p>
+                      <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+                        {st("servicesDialogInsight")}
+                      </p>
+
+                      <div className="mt-6">
+                        <h4 className="text-sm font-semibold text-maroon uppercase tracking-wider mb-3">
+                          {st("servicesDialogConcernsTitle")}
+                        </h4>
+                        <div className="flex flex-wrap gap-2 pb-6">
+                          {selectedService.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full bg-maroon/5 border border-maroon/10 px-4 py-1 text-sm text-maroon/70"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </DialogDescription>
+                </div>
+
+                {/* Fade gradient — sits on top of scroll area, non-interactive */}
+                <div
+                  className="pointer-events-none absolute bottom-0 left-0 right-0 h-12"
+                  style={{
+                    background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
+                  }}
+                />
+              </div>
+
+              {/* FIXED FOOTER */}
+              <div className="flex-none px-6 py-4 border-t border-gold/10 flex flex-col sm:flex-row gap-3">
                 <Button
                   asChild
                   variant="outline"
@@ -198,7 +308,7 @@ export default function ServicesPage() {
                 >
                   <a href="tel:+919480708383">
                     <Phone className="size-4 mr-2" />
-                    Call for Consultation
+                    {st("callForConsultation")}
                   </a>
                 </Button>
                 <Button
@@ -211,11 +321,12 @@ export default function ServicesPage() {
                     rel="noopener noreferrer"
                   >
                     <MessageCircle className="size-4 mr-2" />
-                    WhatsApp Inquiry
+                    {st("whatsappInquiry")}
                   </a>
                 </Button>
-              </DialogFooter>
-            </>
+              </div>
+
+            </div>
           )}
         </DialogContent>
       </Dialog>
