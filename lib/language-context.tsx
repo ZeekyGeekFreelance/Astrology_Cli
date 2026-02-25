@@ -25,7 +25,7 @@ const translations: Record<Language, Record<string, string>> = {
     birthChart: "Birth Chart",
 
     // Hero
-    heroTitle: "Unlock Your Cosmic Destiny",
+    heroTitle: "Decode Your Cosmic Destiny",
     heroSubtitle: "Ancient Vedic Wisdom for Modern Life",
     heroDescription:
       "Discover personalized guidance through the sacred science of Jyotish. Let the stars illuminate your path to prosperity, love, and spiritual growth.",

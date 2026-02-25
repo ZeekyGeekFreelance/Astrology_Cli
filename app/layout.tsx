@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
 const siteName = "VedicSages";
 const siteTitle = "VedicSages - Vedic Astrology & Spiritual Guidance";
 const siteDescription =
-  "Unlock your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.";
+  "Decode your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
 export const metadata: Metadata = {
