@@ -21,6 +21,7 @@ export const POST_BY_SLUG_QUERY = `*[_type == "post" && slug.current == $slug][0
   image,
   externalImageUrl,
   publishedAt,
+  _updatedAt,
   author
 }`;
 
@@ -42,4 +43,9 @@ export const RECENT_POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc)[
   slug,
   publishedAt,
   category
+}`;
+
+export const POST_SLUGS_QUERY = `*[_type == "post" && defined(slug.current)]{
+  "slug": slug.current,
+  _updatedAt
 }`;

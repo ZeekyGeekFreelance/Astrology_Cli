@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { LayoutShell } from "@/components/layout-shell";
+import { getSiteUrl, getSiteUrlObject } from "@/lib/site-url";
 import "./globals.css";
 
 // Fonts are preloaded here so all pages share the same typography tokens.
@@ -23,16 +24,21 @@ const siteName = "VedicSages";
 const siteTitle = "VedicSages - Vedic Astrology & Spiritual Guidance";
 const siteDescription =
   "Decode your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.";
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  metadataBase: getSiteUrlObject(),
   title: {
     default: siteTitle,
     template: "%s | VedicSages",
   },
   description: siteDescription,
+  authors: [{ name: siteName }],
+  creator: siteName,
+  publisher: siteName,
   applicationName: siteName,
+  manifest: "/manifest.webmanifest",
+  category: "Astrology",
   keywords: [
     "Vedic astrology",
     "birth chart analysis",
@@ -47,11 +53,26 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     siteName,
+    url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl ? "/" : undefined,
   },
   icons: {
     icon: [
@@ -81,6 +102,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl || undefined,
+    inLanguage: "en-IN",
+  };
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -105,6 +134,10 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} ${playfair.variable} font-sans antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
