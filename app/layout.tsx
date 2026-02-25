@@ -1,23 +1,58 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { LayoutShell } from "@/components/layout-shell";
 import "./globals.css";
 
 // Fonts are preloaded here so all pages share the same typography tokens.
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
-const _playfair = Playfair_Display({
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
 });
 
+const siteName = "VedicSages";
+const siteTitle = "VedicSages - Vedic Astrology & Spiritual Guidance";
+const siteDescription =
+  "Unlock your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
 export const metadata: Metadata = {
-  title: "VedicSages - Vedic Astrology & Spiritual Guidance",
-  description:
-    "Unlock your cosmic destiny with personalized Vedic astrology consultations. Birth chart analysis, name suggestions, gemstone recommendations, and spiritual remedies.",
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  title: {
+    default: siteTitle,
+    template: "%s | VedicSages",
+  },
+  description: siteDescription,
+  applicationName: siteName,
+  keywords: [
+    "Vedic astrology",
+    "birth chart analysis",
+    "astrology consultation",
+    "name suggestion",
+    "gemstone recommendation",
+    "Bengaluru astrologer",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    title: siteTitle,
+    description: siteDescription,
+    siteName,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+  },
   icons: {
     icon: [
       {
@@ -46,9 +81,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: siteName,
+    description: siteDescription,
+    telephone: "+91 94483 13270",
+    url: siteUrl || undefined,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Bengaluru",
+      addressRegion: "Karnataka",
+      addressCountry: "IN",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+  };
+
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body
+        className={`${geist.variable} ${geistMono.variable} ${playfair.variable} font-sans antialiased`}
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         {/* App-wide providers, header/footer shell, and route content */}
         <LayoutShell>{children}</LayoutShell>
         {/* Global toast notifications */}

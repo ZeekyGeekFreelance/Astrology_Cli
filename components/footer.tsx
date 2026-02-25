@@ -59,11 +59,11 @@ export function Footer() {
             </h3>
             <div className="flex flex-col gap-3">
               <a
-                href="tel:+919480708383"
+                href="tel:+919448313270"
                 className="flex items-center gap-2 text-sm text-cream/80 transition-all hover:text-gold active:scale-95"
               >
                 <Phone className="size-4" />
-                +91 94807 08383
+                +91 94483 13270
               </a>
               <a
                 href={`https://wa.me/919448313270?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`}

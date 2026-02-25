@@ -52,7 +52,6 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
             throw lastError;
         } catch (err) {
-            console.error("Error fetching post:", err);
             setError("Unable to load this article right now. Please try again.");
         } finally {
             setLoading(false);

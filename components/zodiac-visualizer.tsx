@@ -1,8 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
 
 interface ZodiacVisualizerProps {
     onSelect: (name: string) => void;
@@ -25,8 +23,6 @@ const zodiacs = [
 ];
 
 export function ZodiacVisualizer({ onSelect, selectedZodiac }: ZodiacVisualizerProps) {
-    const { t } = useLanguage();
-
     return (
         <div className="grid grid-cols-1 min-[320px]:grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-4">
             {zodiacs.map((z) => (

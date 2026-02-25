@@ -45,9 +45,9 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-sans: var(--font-geist), "Geist", "Geist Fallback";
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
   --color-gold: var(--gold);
   --color-saffron: var(--saffron);
   --color-maroon: var(--maroon);

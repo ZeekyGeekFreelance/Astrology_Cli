@@ -2,16 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  Star,
-  Hash,
-  Palette,
-  Gem,
-  ScrollText,
   Shield,
   Heart,
   Briefcase,
-  Sparkles,
-  UserCheck,
   Scale,
   Baby,
   Activity,
@@ -25,10 +18,8 @@ import { DetailedServiceCard } from "@/components/service-card-detailed";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from "@/components/ui/dialog";
 
 const detailedServices = [
@@ -190,7 +181,7 @@ export default function ServicesPage() {
               size="lg"
               className="w-full border-cream text-cream bg-transparent hover:bg-cream hover:text-maroon shadow-md transition-all duration-300 active:scale-95 sm:w-auto"
             >
-              <a href="tel:+919480708383">
+              <a href="tel:+919448313270">
                 <Phone className="size-4 mr-2" />
                 {t("callExpert")}
               </a>
@@ -306,7 +297,7 @@ export default function ServicesPage() {
                   variant="outline"
                   className="flex-1 border-saffron text-saffron bg-transparent hover:bg-saffron hover:text-cream shadow-sm transition-all duration-300 active:scale-95"
                 >
-                  <a href="tel:+919480708383">
+                  <a href="tel:+919448313270">
                     <Phone className="size-4 mr-2" />
                     {st("callForConsultation")}
                   </a>

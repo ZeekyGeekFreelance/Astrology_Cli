@@ -268,9 +268,9 @@ export default function HomePage() {
               size="lg"
               className="w-full border-cream text-cream bg-transparent hover:bg-cream hover:text-maroon shadow-md transition-all duration-300 active:scale-95 sm:w-auto"
             >
-              <a href="tel:+919480708383">
+              <a href="tel:+919448313270">
                 <Phone className="size-4 mr-2" />
-                +91 94807 08383
+                +91 94483 13270
               </a>
             </Button>
             <Button

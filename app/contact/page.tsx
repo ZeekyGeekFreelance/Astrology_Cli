@@ -16,6 +16,7 @@ export default function ContactPage() {
     // Service selector state supports curated options + custom service entry.
     const [selectedServiceOption, setSelectedServiceOption] = useState("");
     const [customService, setCustomService] = useState("");
+    const visitUsMapHref = "https://www.google.com/maps/search/?api=1&query=VedicSages+Centre%2C+Bengaluru%2C+Karnataka%2C+India";
 
     // Curated services shown in the contact form dropdown.
     const curatedServices = [
@@ -71,8 +72,8 @@ export default function ContactPage() {
         {
             icon: Phone,
             title: t("phone"),
-            value: "+91 94807 08383",
-            href: "tel:+919480708383",
+            value: "+91 94483 13270",
+            href: "tel:+919448313270",
             color: "text-maroon",
             bg: "bg-maroon/10",
         },
@@ -87,8 +88,8 @@ export default function ContactPage() {
         {
             icon: Mail,
             title: t("email"),
-            value: "contact@vedicsages.com",
-            href: "mailto:contact@vedicsages.com",
+            value: "whatsappragale@gmail.com",
+            href: "mailto:whatsappragale@gmail.com",
             color: "text-saffron",
             bg: "bg-saffron/10",
         },
@@ -161,7 +162,16 @@ export default function ContactPage() {
                                 <div className="flex gap-4">
                                     <MapPin className="size-6 text-saffron shrink-0" />
                                     <div>
-                                        <h3 className="font-serif font-bold text-maroon mb-2">Our Ashram</h3>
+                                        <h3 className="font-serif font-bold text-maroon mb-2">
+                                            <a
+                                                href={visitUsMapHref}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="transition-colors hover:text-saffron"
+                                            >
+                                                Visit Us
+                                            </a>
+                                        </h3>
                                         <p className="text-sm text-muted-foreground">
                                             VedicSages Centre, Bengaluru, Karnataka, India
                                         </p>
@@ -256,6 +266,5 @@ export default function ContactPage() {
         </div>
     );
 }
-
 
 

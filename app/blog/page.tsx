@@ -84,7 +84,6 @@ export default function BlogPage() {
 
             throw lastError;
         } catch (err) {
-            console.error("Error fetching posts:", err);
             setPosts([]);
             setError("Unable to load blog posts right now. Please try again.");
         } finally {
@@ -236,5 +235,4 @@ export default function BlogPage() {
         </div>
     );
 }
-
 

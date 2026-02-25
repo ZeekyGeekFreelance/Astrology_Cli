@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Sparkles, Wand2 } from "lucide-react";
+import { Sparkles, Wand2 } from "lucide-react";
 import { RecommendationForms } from "@/components/recommendation-forms";
 import { useLanguage } from "@/lib/language-context";
 

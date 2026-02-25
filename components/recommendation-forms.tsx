@@ -414,7 +414,7 @@ export function RecommendationForms() {
                 variant="outline"
                 className="border-saffron text-saffron bg-transparent hover:bg-saffron hover:text-cream transition-all duration-300 active:scale-95 h-12 px-6"
               >
-                <a href="tel:+919480708383">
+                <a href="tel:+919448313270">
                   <Phone className="size-4 mr-2" />
                   {t("recommendationsCallAstrologer")}
                 </a>
@@ -425,7 +425,7 @@ export function RecommendationForms() {
                 className="bg-[#cf5a1b] text-white hover:bg-[#cf5a1b]/70 active:scale-95 border-none h-12 px-6"
               >
                 <a
-                  href={`https://wa.me/919480708383?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`}
+                  href={`https://wa.me/919448313270?text=${encodeURIComponent("Namaste Guruji, I would like to book an astrology consultation. Please share the next steps.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
